@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/loginFragment">
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.habittracker27.view.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/login_fragment">
+        <action
+            android:id="@+id/actionHabitListFragment"
+            app:destination="@id/habitListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/habitListFragment"
+        android:name="com.example.habittracker27.view.HabitListFragment"
+        android:label="HabitListFragment"
+        tools:layout="@layout/fragment_habit_list">
+        <action
+            android:id="@+id/actionHabitDetailFragment"
+            app:destination="@id/habitDetailFragment" />
+        <action
+            android:id="@+id/actionHabitEditFragment"
+            app:destination="@id/habitEditFragment">
+            <argument
+                android:name="habitId"
+                app:argType="integer" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/habitDetailFragment"
+        android:name="com.example.habittracker27.view.HabitDetailFragment"
+        android:label="HabitDetailFragment"
+        tools:layout="@layout/fragment_habit_detail">
+        <argument
+            android:name="habitId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/actionBackToHabitListFragment"
+            app:destination="@id/habitListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/habitEditFragment"
+        android:name="com.example.habittracker27.view.HabitEditFragment"
+        android:label="HabitEditFragment"
+        tools:layout="@layout/fragment_habit_edit">
+        <argument
+            android:name="habitId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/actionBackToHabitListFragmentFromEdit"
+            app:destination="@id/habitListFragment" />
+    </fragment>
+</navigation>
