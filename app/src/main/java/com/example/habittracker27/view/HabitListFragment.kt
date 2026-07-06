@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.habittracker27.databinding.FragmentHabitListBinding
-import com.example.habittracker27.model.HabitListAdapter
+import com.example.habittracker27.viewmodel.HabitListAdapter
 import com.example.habittracker27.viewmodel.ListViewModel
 
 class HabitListFragment : Fragment() {

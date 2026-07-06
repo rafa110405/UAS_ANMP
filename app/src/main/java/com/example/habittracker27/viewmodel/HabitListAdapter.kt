@@ -1,13 +1,15 @@
-package com.example.habittracker27.model
+package com.example.habittracker27.viewmodel
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.habittracker27.R
 import com.example.habittracker27.databinding.HabitCardItemBinding
+import com.example.habittracker27.model.Habit
 import com.example.habittracker27.view.HabitListFragmentDirections
-import com.example.habittracker27.viewmodel.ListViewModel
 
 class HabitListAdapter(val habitList: ArrayList<Habit>, val viewModel: ListViewModel) :
     RecyclerView.Adapter<HabitListAdapter.HabitViewHolder>() {
@@ -35,14 +37,14 @@ class HabitListAdapter(val habitList: ArrayList<Habit>, val viewModel: ListViewM
             holder.binding.txtStatus.setBackgroundResource(R.drawable.bg_status_compleate)
             holder.binding.btnPlus.isEnabled = false
             holder.binding.btnMinus.isEnabled = false
-            holder.binding.imgVerified.visibility = android.view.View.VISIBLE
+            holder.binding.imgVerified.visibility = View.VISIBLE
 
         } else {
             holder.binding.txtStatus.text = "In Progress"
             holder.binding.txtStatus.setBackgroundResource(R.drawable.bg_status)
             holder.binding.btnPlus.isEnabled = true
             holder.binding.btnMinus.isEnabled = true
-            holder.binding.imgVerified.visibility = android.view.View.INVISIBLE
+            holder.binding.imgVerified.visibility = View.INVISIBLE
         }
         holder.binding.imgIcon.setImageResource(habit.icon)
 
@@ -59,10 +61,10 @@ class HabitListAdapter(val habitList: ArrayList<Habit>, val viewModel: ListViewM
                 val action = HabitListFragmentDirections.actionHabitEditFragment(habit.id)
                 it.findNavController().navigate(action)
             } else {
-                android.widget.Toast.makeText(
+                Toast.makeText(
                     it.context,
                     "Habit is already completed and cannot be edited",
-                    android.widget.Toast.LENGTH_SHORT
+                    Toast.LENGTH_SHORT
                 ).show()
             }
         }

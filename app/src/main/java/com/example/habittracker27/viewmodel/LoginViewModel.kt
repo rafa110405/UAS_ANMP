@@ -19,27 +19,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
         launch{
             val db = buildDb(getApplication())
             val user = db.userDao().login(username,password)
-            if (user != null) {
-                val sharedPref = getApplication<Application>().getSharedPreferences(
-                    "habit_tracker_prefs", android.content.Context.MODE_PRIVATE)
-                with(sharedPref.edit()) {
-                    putBoolean("is_logged_in", true)
-                    apply()
-                }
-                loginResult.postValue(true)
-            } else {
-                loginResult.postValue(false)
-            }
-        }
-    }
-
-    fun checkLoginStatus() {
-        val sharedPref = getApplication<Application>().getSharedPreferences("habit_tracker_prefs", android.content.Context.MODE_PRIVATE)
-        val isLoggedIn = sharedPref.getBoolean("is_logged_in", false)
-        if (isLoggedIn) {
-            loginResult.postValue(true)
+            loginResult.postValue(user != null)
         }
     }
     override val coroutineContext: CoroutineContext get() = job + Dispatchers.IO
-
 }

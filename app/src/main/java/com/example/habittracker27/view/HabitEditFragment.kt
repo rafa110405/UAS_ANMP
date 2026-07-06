@@ -89,7 +89,9 @@ class HabitEditFragment : Fragment() {
             val newGoal = goalStr.toIntOrNull() ?: habit.goal
 
             if (newGoal <= 0) {
-                Toast.makeText(context, "Goal must be greater than 0", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,
+                    "Goal must be greater than 0",
+                        Toast.LENGTH_SHORT).show()
                 return
             }
 

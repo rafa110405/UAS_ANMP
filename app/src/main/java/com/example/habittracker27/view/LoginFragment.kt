@@ -9,12 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.habittracker27.databinding.LoginFragmentBinding
-import com.example.habittracker27.model.User
 import com.example.habittracker27.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
     private lateinit var viewModel: LoginViewModel
     private lateinit var binding: LoginFragmentBinding
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,9 +24,19 @@ class LoginFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
-        viewModel.checkLoginStatus()
+        val shared = requireContext().getSharedPreferences(
+            requireContext().packageName, android.content.Context.MODE_PRIVATE
+        )
+        val isLoggedIn = shared.getBoolean("is_logged_in", false)
+
+        if (isLoggedIn) {
+            val action = LoginFragmentDirections.actionHabitListFragment()
+            view.findNavController().navigate(action)
+            return
+        }
 
         binding.btnLogin.setOnClickListener {
             val username = binding.txtName.text.toString()
@@ -40,6 +50,13 @@ class LoginFragment : Fragment() {
     fun observeViewModel() {
         viewModel.loginResult.observe(viewLifecycleOwner, Observer {
             if (it) {
+                val shared = requireContext().getSharedPreferences(
+                    requireContext().packageName, android.content.Context.MODE_PRIVATE
+                )
+                val editor = shared.edit()
+                editor.putBoolean("is_logged_in", true)
+                editor.apply()
+
                 val action = LoginFragmentDirections.actionHabitListFragment()
                 requireView().findNavController().navigate(action)
             } else {
