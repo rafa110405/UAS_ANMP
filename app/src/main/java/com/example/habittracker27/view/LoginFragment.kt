@@ -28,7 +28,8 @@ class LoginFragment : Fragment() {
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
         val shared = requireContext().getSharedPreferences(
-            requireContext().packageName, android.content.Context.MODE_PRIVATE
+            requireContext().packageName,
+            android.content.Context.MODE_PRIVATE
         )
         val isLoggedIn = shared.getBoolean("is_logged_in", false)
 
@@ -51,7 +52,8 @@ class LoginFragment : Fragment() {
         viewModel.loginResult.observe(viewLifecycleOwner, Observer {
             if (it) {
                 val shared = requireContext().getSharedPreferences(
-                    requireContext().packageName, android.content.Context.MODE_PRIVATE
+                    requireContext().packageName,
+                    android.content.Context.MODE_PRIVATE
                 )
                 val editor = shared.edit()
                 editor.putBoolean("is_logged_in", true)
