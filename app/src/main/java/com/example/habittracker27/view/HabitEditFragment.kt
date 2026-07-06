@@ -111,7 +111,8 @@ class HabitEditFragment : Fragment() {
 
             viewModel.updateHabit(habit)
             Toast.makeText(context,
-                "Habit updated successfully", Toast.LENGTH_SHORT).show()
+                "Habit updated successfully",
+                Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
         }
     }
