@@ -27,17 +27,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
 
-        val shared = requireContext().getSharedPreferences(
-            requireContext().packageName,
-            android.content.Context.MODE_PRIVATE
-        )
-        val isLoggedIn = shared.getBoolean("is_logged_in", false)
-
-        if (isLoggedIn) {
-            val action = LoginFragmentDirections.actionHabitListFragment()
-            view.findNavController().navigate(action)
-            return
-        }
+        viewModel.checkLoginStatus()
 
         binding.btnLogin.setOnClickListener {
             val username = binding.txtName.text.toString()
@@ -51,18 +41,17 @@ class LoginFragment : Fragment() {
     fun observeViewModel() {
         viewModel.loginResult.observe(viewLifecycleOwner, Observer {
             if (it) {
-                val shared = requireContext().getSharedPreferences(
-                    requireContext().packageName,
-                    android.content.Context.MODE_PRIVATE
-                )
-                val editor = shared.edit()
-                editor.putBoolean("is_logged_in", true)
-                editor.apply()
-
                 val action = LoginFragmentDirections.actionHabitListFragment()
                 requireView().findNavController().navigate(action)
             } else {
                 binding.txtError.visibility = View.VISIBLE
+            }
+        })
+
+        viewModel.activeUserLD.observe(viewLifecycleOwner, Observer { user ->
+            if (user != null) {
+                val action = LoginFragmentDirections.actionHabitListFragment()
+                requireView().findNavController().navigate(action)
             }
         })
     }

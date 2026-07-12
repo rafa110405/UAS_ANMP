@@ -13,5 +13,8 @@ data class User(
     var username: String,
 
     @ColumnInfo(name = "password")
-    var password: String
+    var password: String,
+
+    @ColumnInfo(name = "is_logged_in")
+    var isLoggedIn: Int = 0
 )

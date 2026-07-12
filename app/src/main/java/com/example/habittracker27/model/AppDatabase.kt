@@ -8,7 +8,7 @@ import com.example.habittracker27.Util.DB_NAME
 import com.example.habittracker27.model.Habit
 import com.example.habittracker27.model.User
 
-@Database(entities = [Habit::class, User::class], version = 2, exportSchema = false)
+@Database(entities = [Habit::class, User::class], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun habitDao(): HabitDao
@@ -25,6 +25,7 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java,
                 DB_NAME
             )
+                .fallbackToDestructiveMigration()
                 .build()
 
         operator fun invoke(context: Context): AppDatabase = instance ?: synchronized(LOCK) {
